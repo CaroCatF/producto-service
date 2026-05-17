@@ -24,13 +24,9 @@ public class ProductoService {
     }
 
     //Busacar por id
-    public Producto buscarPorId(Integer id){
-        for (Producto producto : listaProductos) {
-            if (producto.getId().equals(id)) {
-                return productoRepository.findById(id).orElse(null);
-                
-            }
-        }return null;
+    public Producto buscarPorId(Integer id) {
+    return productoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
     }
 
     //Guardar producto
