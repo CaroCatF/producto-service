@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora de Descuento</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon.png">
+<style>
+body{
+    font-family: Arial;
+    background:#f4f4f4;
+    padding:20px;
+}
+.container{
+    background:white;
+    padding:20px;
+    max-width:400px;
+    margin:auto;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+input,select,button{
+    width:100%;
+    padding:8px;
+    margin:5px 0;
+}
+.resultado{
+    margin-top:10px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Calculadora de Descuento</h2>
+
+<input type="number" id="precio" placeholder="Precio normal">
+<input type="number" id="descuentoPOS" placeholder="Valor de descuento que aplica el POS (lo que sale en rojo)">
+
+<select id="opcion">
+    <option value="1">Ingresar % descuento a respetar </option>
+    <option value="2">Ingresar precio a respetar </option>
+</select>
+
+<input type="number" id="dato" placeholder="Valor según opción (% o precio final)">
+
+<button onclick="calcular()">Calcular</button>
+
+<div class="resultado" id="resultado"></div>
+</div>
+
+<script>
+function calcular(){
+
+    let precioNormal = parseFloat(document.getElementById("precio").value);
+    let descuentoPOS = parseFloat(document.getElementById("descuentoPOS").value);
+    let opcion = document.getElementById("opcion").value;
+    let dato = parseFloat(document.getElementById("dato").value);
+
+    if(isNaN(precioNormal) || isNaN(descuentoPOS) || isNaN(dato)){
+        alert("Complete todos los campos");
+        return;
+    }
+
+    let porcentajePOS = descuentoPOS/precioNormal*100;
+    let descuentoRestante = 100 - porcentajePOS;
+    let precioBase;
+
+    if(opcion == 1){
+        // % final
+        let valorFinal = precioNormal*((100-dato)/100);
+        precioBase = valorFinal/(descuentoRestante/100);
+    }
+    else{
+        // precio final
+        precioBase = dato/(descuentoRestante/100);
+    }
+
+    document.getElementById("resultado").innerHTML =
+    "Debes marcar el producto a: $"+precioBase.toFixed(2);
+}
+</script>
+
+</body>
+</html>
+
+
