@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+
+import com.ecommerce.producto.assembler.ProductoModelAssembler;
+
 import com.ecommerce.producto.model.Producto;
 import com.ecommerce.producto.service.ProductoService;
 
@@ -27,18 +32,27 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
+    @Autowired
+    private ProductoModelAssembler assembler;
+
     //listar productos
     @Operation(summary = "Listar todos los productos")
     @GetMapping
-    public List<Producto>listar(){
-        return productoService.listar();
+    public CollectionModel<EntityModel<Producto>> listar() {
+
+    List<Producto> productos = productoService.listar();
+
+    return assembler.toCollectionModel(productos);
     }
 
     //Buscar por id
     @Operation(summary = "Buscar producto por Id")
     @GetMapping("/{id}")
-    public Producto buscarPorId(@PathVariable Integer id){
-        return productoService.buscarPorId(id);
+    public EntityModel<Producto> buscarPorId(@PathVariable Integer id) {
+
+    Producto producto = productoService.buscarPorId(id);
+
+    return assembler.toModel(producto);
     }
 
     //Guardar producto
