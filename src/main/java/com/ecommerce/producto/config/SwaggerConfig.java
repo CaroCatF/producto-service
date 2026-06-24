@@ -15,7 +15,7 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("API Producto Service")
                         .version("1.0")
-                        .description("Microservicio de gestión de productos. Permite crear, consultars, actualizar y eliminar productos,así como filtrarlos por id. Requiere autenticación mediante JWT con roles USUARIO o ADMIN."));
+                        .description("Microservicio de gestión de productos. Permite crear, consultar, actualizar y eliminar productos,así como filtrarlos por id. Requiere autenticación mediante JWT con roles USUARIO o ADMIN."));
     
         
         }

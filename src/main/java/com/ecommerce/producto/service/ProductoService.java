@@ -41,6 +41,21 @@ public class ProductoService {
         return productoRepository.save(producto);
     }
 
+    public Producto actualizarStock(Integer id, Integer cantidad){
+
+    Producto producto = productoRepository.findById(id)
+            .orElseThrow(() ->
+                new RuntimeException("Producto no existe"));
+    int nuevoStock = producto.getStock() + cantidad;
+    if(nuevoStock < 0){
+        throw new RuntimeException(
+            "Stock insuficiente"
+        );
+    }
+    producto.setStock(nuevoStock);
+    return productoRepository.save(producto);
+}
+
     public void eliminar(Integer id) {
         productoRepository.deleteById(id);
     }
